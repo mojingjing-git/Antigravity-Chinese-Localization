@@ -4,6 +4,17 @@ This document tracks all version releases, core architecture adaptations, and fe
 
 ---
 
+## v2.28.2 (2026-10-30)
+
+### 1. Tracking the Official 2.28.2 Patch
+- **Seamless Official Version Update**: Synchronized with the 2.28.2 patch Google pushed in the early hours of October 30; the application version and project metadata move to `2.28.2` so the dashboard no longer reports a false "new official version" mismatch.
+- **Zero Native-Layer Change Confirmed**: the official 2.28.2 `dist/` tree contains exactly the same 41 native modules as 2.28.1 — nothing added, nothing removed — and all 50 native string replacement targets keep hitting.
+- **Zero New Interface Copy Confirmed**: 1346 candidates were extracted from the official 2.28.2 renderer bundle (10.65 MB) and compared against the existing dictionary; every remaining uncovered item is noise (protobuf enums, internal state keys), so there is no new interface copy to add. 2.28.2 is a pure fix release.
+- **Synced the `app.asar.ready` Offline Patch Bundle**: `auto-restore.js` rejects a patch whose version does not match exactly (exit code 2), so leaving it stale would break the one-click restore after an official update. The bundle is repackaged for 2.28.2.
+- **Fixed the Version-Assertion Regression (third occurrence)**: `ticket-29-v2281-features.test.js` again used hard-coded "strictly equals 2.28.1" assertions. Restored to self-consistent checks (valid version, not below baseline, and exactly equal to `CURRENT_VERSION`), matching the existing ticket-24 / ticket-25 / ticket-26 approach.
+
+---
+
 ## v2.28.1 (2026-10-29)
 
 ### 1. Comprehensive Adaptation for Antigravity v2.28.1
